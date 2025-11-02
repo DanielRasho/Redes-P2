@@ -2,7 +2,7 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from datetime import datetime
 
-PORT = 8000
+PORT = 80
 
 # HTML estático que se servirá
 HTML_CONTENT = """
@@ -83,7 +83,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
 
 def run_server():
-    server_address = ("", PORT)
+    server_address = ("0.0.0.0", PORT)
     httpd = HTTPServer(server_address, SimpleHTTPRequestHandler)
 
     print(f"✅ Servidor ejecutándose en http://localhost:{PORT}")
