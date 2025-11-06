@@ -86,7 +86,7 @@ def run_server():
     server_address = ("0.0.0.0", PORT)
     httpd = HTTPServer(server_address, SimpleHTTPRequestHandler)
 
-    print(f"✅ Servidor ejecutándose en http://localhost:{PORT}")
+    print(f"✅ Servidor ejecutándose en http://{server_address[0]}:{PORT}")
     print("Presiona Ctrl+C para detener el servidor")
 
     try:
