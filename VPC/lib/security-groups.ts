@@ -41,7 +41,7 @@ export function createSecurityGroups(
 // Define security group configurations
 export const securityGroupConfigs: SecurityGroupConfig[] = [
   {
-    name: 'f-sg-allow-everything',
+    name: 'r-allow-everything',
     description: 'First security group with allow all traffic',
     allowAllInbound: true,
     allowAllOutbound: true,
