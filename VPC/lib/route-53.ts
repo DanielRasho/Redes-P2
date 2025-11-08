@@ -18,14 +18,14 @@ export function createRoute53Configuration(
   new route53.ARecord(scope, 'RuwuComRecord', {
     zone: hostedZone,
     recordName: 'ruwu.com',
-    target: route53.RecordTarget.fromIpAddresses('10.0.0.0'),
+    target: route53.RecordTarget.fromIpAddresses('10.0.0.74'),
     ttl: cdk.Duration.seconds(5),
   });
 
   new route53.ARecord(scope, 'LdapRuwuComRecord', {
     zone: hostedZone,
     recordName: 'ldap.ruwu.com',
-    target: route53.RecordTarget.fromIpAddresses('10.0.0.32'),
+    target: route53.RecordTarget.fromIpAddresses('10.0.0.69'),
     ttl: cdk.Duration.seconds(5),
   });
 

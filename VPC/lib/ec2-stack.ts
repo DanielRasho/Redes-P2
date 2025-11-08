@@ -15,11 +15,18 @@ export interface Ec2InstanceConfig {
 // Define your EC2 instances here
 export const ec2Configurations: Ec2InstanceConfig[] = [
   {
-    name: 'ldap-server-1',
+    name: 'r-ldap',
     instanceType: 't2.micro',
     subnetName: 'r-datacenter',
     securityGroupName: 'r-allow-everything',
     amiId: 'ami-08c78a3c91b8d45e2',
+    keyPairName: 'Llaves globales',
+  },
+  {
+    name: 'r-RRHH-web',
+    instanceType: 't2.micro',
+    subnetName: 'r-datacenter',
+    securityGroupName: 'r-allow-everything',
     keyPairName: 'Llaves globales',
   },
   {
