@@ -25,6 +25,7 @@
         packages = [
           pkgs.ruff
           python
+          pkgs.nodePackages_latest.aws-cdk
         ];
       };
     });
