@@ -1,5 +1,4 @@
-# Proyecto 2 
-
+# Proyecto 2
 
 ## Configurar AWS CLI
 
@@ -12,6 +11,7 @@ aws configure
 ```
 
 ## Desplegar infraestructura
+
 ```
 cd VPC
 
@@ -24,12 +24,17 @@ cdk destroy <stack name> # Destruye todos los recursos del stack
 
 ## Project structure
 
-Se cuentan con 2 stacks, `RayoUwUStack` para la definición de la red y conectividad, `RayoUwUEC2` para definir EC2 permantentes de los que depende la red como el LDAP o el WebServer.
+Se cuentan con 2 stacks, `RayoUwUStack` para la definición de la red y
+conectividad, `RayoUwUEC2` para definir EC2 permantentes de los que depende la
+red como el LDAP o el WebServer.
 
 ### Advertencias ⚠️
+
 - Evitar lo más posibles modificar las redes manualmente desde la página web.
-- Aquellos recursos que esten cambiendo frecuentemente es mejor dejarlos fuera del CDK.
-- Experimentar primero con recursos manuales, una vez definida bien la estructura agregarlos al CDK
+- Aquellos recursos que esten cambiando frecuentemente es mejor dejarlos fuera
+  del CDK.
+- Experimentar primero con recursos manuales, una vez definida bien la
+  estructura agregarlos al CDK
 
 ```
 ├── LDAP/

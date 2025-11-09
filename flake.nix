@@ -26,6 +26,8 @@
           pkgs.ruff
           python
           pkgs.nodePackages_latest.aws-cdk
+          pkgs.awscli2
+          pkgs.nodePackages.aws-cdk
         ];
       };
     });
