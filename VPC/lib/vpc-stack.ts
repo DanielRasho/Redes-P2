@@ -14,7 +14,7 @@ export class VpcStack extends cdk.Stack {
 
     // Create VPC with custom CIDR
     const vpc = new ec2.Vpc(this, "RayoUwU", {
-      ipAddresses: ec2.IpAddresses.cidr("10.0.0.0/24"),
+      ipAddresses: ec2.IpAddresses.cidr("10.66.0.0/24"),
       maxAzs: 1,
       subnetConfiguration: [],
       natGateways: 0,
@@ -44,11 +44,12 @@ export class VpcStack extends cdk.Stack {
 
     // Define subnet configurations
     const subnetConfigs: SubnetConfig[] = [
-      { name: "r-rrhh", cidr: "10.0.0.96/28", aclRulePriority: 100 },
-      { name: "r-visitas", cidr: "10.0.0.80/28", aclRulePriority: 200 },
-      { name: "r-datacenter", cidr: "10.0.0.64/28", aclRulePriority: 300 },
-      { name: "r-ti", cidr: "10.0.0.32/27", aclRulePriority: 400 },
-      { name: "r-ventas", cidr: "10.0.0.0/27", aclRulePriority: 500 },
+      { name: "r-ventas", cidr: "10.66.0.0/27", aclRulePriority: 500 },
+      { name: "r-ti", cidr: "10.66.0.32/27", aclRulePriority: 400 },
+      { name: "r-datacenter", cidr: "10.66.0.64/28", aclRulePriority: 300 },
+      { name: "r-visitas", cidr: "10.66.0.80/28", aclRulePriority: 200 },
+      { name: "r-rrhh", cidr: "10.66.0.96/28", aclRulePriority: 100 },
+      { name: "r-vpn", cidr: "10.66.0.112/28", aclRulePriority: 100 },
     ];
 
     // Create subnets with their route tables

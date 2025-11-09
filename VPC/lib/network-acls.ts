@@ -119,7 +119,7 @@ export const subnetNaclRules: SubnetNaclConfig[] = [
       {
         ruleNumber: 401,
         protocol: 6, // TCP
-        cidrBlock: "10.0.0.0/24",
+        cidrBlock: "10.66.0.0/24",
         egress: false,
         ruleAction: "allow",
         portRange: {
@@ -131,6 +131,25 @@ export const subnetNaclRules: SubnetNaclConfig[] = [
   },
   {
     subnetName: "r-ventas",
+    rules: [
+      {
+        ruleNumber: 500,
+        protocol: -1,
+        cidrBlock: "0.0.0.0/0",
+        egress: false,
+        ruleAction: "allow",
+      },
+      {
+        ruleNumber: 500,
+        protocol: -1,
+        cidrBlock: "0.0.0.0/0",
+        egress: true,
+        ruleAction: "allow",
+      },
+    ],
+  },
+  {
+    subnetName: "r-vpn",
     rules: [
       {
         ruleNumber: 500,
