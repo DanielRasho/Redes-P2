@@ -29,6 +29,7 @@
           pkgs.awscli2
           pkgs.nodePackages.aws-cdk
           pkgs.nodejs
+          pkgs.biome
         ];
       };
     });
