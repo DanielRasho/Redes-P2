@@ -42,16 +42,17 @@ function aclAllProcsAndIps(
 	startAt: number = 10,
 ): NaclRuleConfig[] {
 	return cidrs.flatMap((cid, idx) => {
+		const ruleNumber = idx * 10 + startAt;
 		return [
 			{
-				ruleNumber: idx * 10 + startAt,
+				ruleNumber,
 				protocol: PROTOCOLS.all,
 				cidrBlock: cid,
 				egress: false,
 				ruleAction: access,
 			},
 			{
-				ruleNumber: (idx + 1) * 10,
+				ruleNumber,
 				protocol: PROTOCOLS.all,
 				cidrBlock: cid,
 				egress: true,
@@ -118,9 +119,9 @@ export const subnetNaclRules: SubnetNaclConfig[] = [
 		rules: [
 			...ALLOW_SSH_RULES,
 			...aclAllProcsAndIps("allow", [
-				"10.0.0.32/27",
-				"10.0.0.64/28",
-				"10.0.0.96/28",
+				"10.66.0.32/27",
+				"10.66.0.64/28",
+				"10.66.0.96/28",
 			]),
 			...DENY_EVERYTHING_RULES,
 		],
@@ -129,7 +130,7 @@ export const subnetNaclRules: SubnetNaclConfig[] = [
 		subnetName: "r-visitas",
 		rules: [
 			...ALLOW_SSH_RULES,
-			...aclAllProcsAndIps("allow", ["10.0.0.80/28", "10.0.0.32/27"]),
+			...aclAllProcsAndIps("allow", ["10.66.0.80/28", "10.66.0.32/27"]),
 			...DENY_EVERYTHING_RULES,
 		],
 	},
@@ -137,8 +138,8 @@ export const subnetNaclRules: SubnetNaclConfig[] = [
 		subnetName: "r-datacenter",
 		rules: [
 			...ALLOW_SSH_RULES,
-			...aclAllProcsAndIps("deny", ["10.0.0.80/28"]),
-			...aclAllProcsAndIps("allow", ["10.0.0.0/24"], 20),
+			...aclAllProcsAndIps("deny", ["10.66.0.80/28"]),
+			...aclAllProcsAndIps("allow", ["10.66.0.0/24"], 20),
 			...DENY_EVERYTHING_RULES,
 		],
 	},
@@ -146,7 +147,7 @@ export const subnetNaclRules: SubnetNaclConfig[] = [
 		subnetName: "r-ti",
 		rules: [
 			...ALLOW_SSH_RULES,
-			...aclAllProcsAndIps("allow", ["10.0.0.0/24"]),
+			...aclAllProcsAndIps("allow", ["10.66.0.0/24"]),
 			...DENY_EVERYTHING_RULES,
 		],
 	},
@@ -155,9 +156,9 @@ export const subnetNaclRules: SubnetNaclConfig[] = [
 		rules: [
 			...ALLOW_SSH_RULES,
 			...aclAllProcsAndIps("allow", [
-				"10.0.0.32/27",
-				"10.0.0.64/28",
-				"10.0.0.0/27",
+				"10.66.0.32/27",
+				"10.66.0.64/28",
+				"10.66.0.0/27",
 			]),
 			...DENY_EVERYTHING_RULES,
 		],
