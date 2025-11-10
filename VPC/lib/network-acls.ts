@@ -86,8 +86,8 @@ const ALLOW_SSH_RULES: NaclRuleConfig[] = [
 		},
 		protocol: PROTOCOLS.tcp,
 		portRange: {
-			from: 22,
-			to: 22,
+			from: 1024,
+			to: 65535,
 		},
 		cidrBlock: "0.0.0.0/0",
 		egress: true,
