@@ -27,7 +27,7 @@
           python
           pkgs.nodePackages_latest.aws-cdk
           pkgs.awscli2
-          pkgs.nodePackages.aws-cdk
+          # pkgs.nodePackages.aws-cdk
           pkgs.nodejs
           pkgs.biome
         ];
