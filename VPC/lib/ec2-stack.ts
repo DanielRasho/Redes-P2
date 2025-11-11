@@ -7,6 +7,7 @@ export interface Ec2InstanceConfig {
 	instanceType: string;
 	subnetName: string;
 	securityGroupName: string;
+	tags?: Record<string, string>;
 	amiId?: string;
 	keyPairName?: string; // Changed from keyName to keyPairName for clarity
 	userData?: ec2.UserData;
@@ -107,6 +108,12 @@ export function deployMachines(
 				userData: config.userData,
 			}),
 		});
+
+		if (config.tags) {
+			for (const tagKey in config.tags) {
+				cdk.Tags.of(instance).add(tagKey, config.tags[tagKey]);
+			}
+		}
 
 		// Output instance information
 		new cdk.CfnOutput(scope, `${config.name}-InstanceId`, {
