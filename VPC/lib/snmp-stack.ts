@@ -1,6 +1,7 @@
 import * as cdk from "aws-cdk-lib";
 import * as ec2 from "aws-cdk-lib/aws-ec2";
 import * as secrets from "aws-cdk-lib/aws-secretsmanager";
+import * as iam from "aws-cdk-lib/aws-iam";
 import { Construct } from "constructs";
 import { deployMachines, Ec2InstanceConfig } from "./ec2-stack";
 
@@ -17,6 +18,22 @@ export class SNMPStack extends cdk.Stack {
 			availabilityZones: cdk.Stack.of(this).availabilityZones,
 		});
 
+		// const role = new iam.Role(this, "LogStashRole", {
+		// 	assumedBy
+		// });
+		// role.assumeRolePolicy = iam.PolicyDocument.fromJson({
+		// 	Version: "2012-10-17",
+		// 	Statement: [
+		// 		{
+		// 			Effect: "Allow",
+		// 			Principal: {
+		// 				Service: ["ec2.amazonaws.com"],
+		// 			},
+		// 			Action: ["sts:AssumeRole"],
+		// 		},
+		// 	],
+		// });
+
 		const secret = new secrets.Secret(this, "r-snmp-secret", {
 			secretName: "SNMPSecret",
 			generateSecretString: {
@@ -31,6 +48,7 @@ export class SNMPStack extends cdk.Stack {
 			this.stackName,
 			this.region,
 			this.stackId,
+			secret.secretName,
 			{
 				name: "r-snmp-instance-1",
 				instanceType: "t2.micro",
@@ -44,6 +62,7 @@ export class SNMPStack extends cdk.Stack {
 			this.stackName,
 			this.region,
 			this.stackId,
+			secret.secretName,
 			{
 				name: "r-snmp-instance-2",
 				instanceType: "t2.micro",
@@ -62,6 +81,7 @@ export class SNMPStack extends cdk.Stack {
 			this.stackName,
 			this.region,
 			this.stackId,
+			secret.secretName,
 			snmpMachines,
 			{
 				name: "r-logstash-server",
@@ -80,6 +100,7 @@ export function appendSNMPServerConfig(
 	stackName: string,
 	region: string,
 	stackId: string,
+	secretName: string,
 	machines: cdk.aws_ec2.Instance[],
 	original: Ec2InstanceConfig,
 ): Ec2InstanceConfig {
@@ -181,13 +202,13 @@ runas=root`,
 						},
 					),
 					ec2.InitCommand.shellCommand(
-						`aws secretsmanager get-secret-value --region ${region} --secret-id SNMPSecret --query SecretString --output text | jq .username | tr -d ''"''   |  bin/logstash-keystore --path.settings /etc/logstash add SNMP_USER`,
+						`aws secretsmanager get-secret-value --region ${region} --secret-id ${secretName} --query SecretString --output text | jq .username | tr -d ''"''   |  bin/logstash-keystore --path.settings /etc/logstash add SNMP_USER`,
 						{
 							cwd: "/usr/share/logstash/",
 						},
 					),
 					ec2.InitCommand.shellCommand(
-						`aws secretsmanager get-secret-value  --region ${region} --secret-id SNMPSecret --query SecretString --output text | jq .password | tr -d ''"''   |  bin/logstash-keystore --path.settings /etc/logstash add SNMP_PWD`,
+						`aws secretsmanager get-secret-value  --region ${region} --secret-id ${secretName} --query SecretString --output text | jq .password | tr -d ''"''   |  bin/logstash-keystore --path.settings /etc/logstash add SNMP_PWD`,
 						{
 							cwd: "/usr/share/logstash/",
 						},
@@ -212,6 +233,7 @@ export function appendSNMPClientConfig(
 	stackName: string,
 	region: string,
 	stackId: string,
+	secretName: string,
 	original: Ec2InstanceConfig,
 ): Ec2InstanceConfig {
 	if (!original.userData) {
@@ -262,7 +284,7 @@ action=../../opt/aws/bin/cfn-init --stack ${stackName} --resource ${original.nam
 runas=root`,
 					),
 					ec2.InitCommand.shellCommand(
-						`'SECRET=$(aws secretsmanager get-secret-value  --region ${region} --secret-id SNMPSecret --query SecretString --output text); SNMPUSER=$(echo $SECRET | jq .username | tr -d ''"'' ); SNMPPWD=$(echo $SECRET | jq .password | tr -d ''"''   ) ;net-snmp-config --create-snmpv3-user -ro -a MD5 -A $SNMPPWD $SNMPUSER >/dev/null'`,
+						`'SECRET=$(aws secretsmanager get-secret-value  --region ${region} --secret-id ${secretName} --query SecretString --output text); SNMPUSER=$(echo $SECRET | jq .username | tr -d ''"'' ); SNMPPWD=$(echo $SECRET | jq .password | tr -d ''"''   ) ;net-snmp-config --create-snmpv3-user -ro -a MD5 -A $SNMPPWD $SNMPUSER >/dev/null'`,
 					),
 					ec2.InitService.enable("snmpd", {
 						enabled: true,
