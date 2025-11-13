@@ -44,11 +44,12 @@ export class VpcStack extends cdk.Stack {
 
     // Define subnet configurations
     const subnetConfigs: SubnetConfig[] = [
-      { name: "r-ventas", cidr: "10.66.0.0/27", aclRulePriority: 500 },
-      { name: "r-ti", cidr: "10.66.0.32/27", aclRulePriority: 400 },
-      { name: "r-datacenter", cidr: "10.66.0.64/28", aclRulePriority: 300 },
-      { name: "r-visitas", cidr: "10.66.0.80/28", aclRulePriority: 200 },
-      { name: "r-rrhh", cidr: "10.66.0.96/28", aclRulePriority: 100 }
+      { name: "r-ventas", cidr: "10.66.0.0/27"},
+      { name: "r-ti", cidr: "10.66.0.32/27"},
+      { name: "r-datacenter", cidr: "10.66.0.64/28"},
+      { name: "r-visitas", cidr: "10.66.0.80/28"},
+      { name: "r-rrhh", cidr: "10.66.0.96/28"},
+      { name: "r-dmz", cidr: "10.66.0.112/28"},
     ];
 
     // Create subnets with their route tables

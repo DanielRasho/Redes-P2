@@ -20,6 +20,14 @@ export interface Ec2InstanceConfig {
 // Define your EC2 instances here
 export const ec2Configurations: Ec2InstanceConfig[] = [
 	{
+		name: "r-vpn",
+		instanceType: "t2.micro",
+		subnetName: "r-dmz",
+		securityGroupName: "r-allow-everything",
+		amiId: "ami-05180d8e680bfb16d",
+		keyPairName: "Llaves globales",
+	},
+	{
 		name: "r-ldap",
 		instanceType: "t2.micro",
 		subnetName: "r-datacenter",

@@ -25,7 +25,7 @@ export function createRoute53Configuration(
   new route53.ARecord(scope, 'LdapRuwuComRecord', {
     zone: hostedZone,
     recordName: 'ldap.ruwu.com',
-    target: route53.RecordTarget.fromIpAddresses('10.66.0.73'),
+    target: route53.RecordTarget.fromIpAddresses('10.66.0.71'),
     ttl: cdk.Duration.seconds(5),
   });
 

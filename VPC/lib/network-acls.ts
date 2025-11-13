@@ -5,7 +5,6 @@ import * as ec2 from "aws-cdk-lib/aws-ec2";
 export interface SubnetConfig {
 	name: string;
 	cidr: string;
-	aclRulePriority: number;
 }
 
 export interface NaclRuleConfig {
@@ -225,11 +224,10 @@ export const subnetNaclRules: SubnetNaclConfig[] = [
 	{
 		subnetName: "r-datacenter",
 		rules: [
-			...ALLOW_EVERYTHING,
+			// ...ALLOW_EVERYTHING,
 			...ALLOW_SSH_RULES,
-			...ALLOW_VPN,
 			...aclAllProcsAndIps("deny", ["10.66.0.80/28"]),
-			...aclAllProcsAndIps("allow", ["10.66.0.0/24", "0.0.0.0/0"], 20),
+			...aclAllProcsAndIps("allow", ["10.66.0.0/24"], 20),
 			...DENY_EVERYTHING_RULES,
 		],
 	},
@@ -249,6 +247,17 @@ export const subnetNaclRules: SubnetNaclConfig[] = [
 				"10.66.0.32/27",
 				"10.66.0.64/28",
 				"10.66.0.0/27",
+			]),
+			...DENY_EVERYTHING_RULES,
+		],
+	},
+	{
+		subnetName: "r-dmz",
+		rules: [
+			...ALLOW_SSH_RULES,
+			...ALLOW_VPN,
+			...aclAllProcsAndIps("allow", [
+				"10.66.0.0/24",
 			]),
 			...DENY_EVERYTHING_RULES,
 		],
