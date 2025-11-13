@@ -24,7 +24,7 @@ export const ec2Configurations: Ec2InstanceConfig[] = [
 		instanceType: "t2.micro",
 		subnetName: "r-datacenter",
 		securityGroupName: "r-allow-everything",
-		amiId: "ami-0c24ed26a1382e217",
+		amiId: "ami-0dc406729692adba6",
 		keyPairName: "Llaves globales",
 	},
 	{

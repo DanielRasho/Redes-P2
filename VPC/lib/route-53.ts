@@ -18,7 +18,7 @@ export function createRoute53Configuration(
   new route53.ARecord(scope, 'RuwuComRecord', {
     zone: hostedZone,
     recordName: 'ruwu.com',
-    target: route53.RecordTarget.fromIpAddresses('10.66.0.72'),
+    target: route53.RecordTarget.fromIpAddresses('10.66.0.74'),
     ttl: cdk.Duration.seconds(5),
   });
 

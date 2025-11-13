@@ -95,6 +95,94 @@ const ALLOW_SSH_RULES: NaclRuleConfig[] = [
 	},
 ];
 
+const ALLOW_VPN: NaclRuleConfig[] = [
+	{
+		ruleNumber: 6,
+		icmp: {
+			code: -1,
+			type: ICMP_TYPES.all,
+		},
+		protocol: PROTOCOLS.udp,
+		portRange: {
+			from: 1194,
+			to: 1194,
+		},
+		cidrBlock: "0.0.0.0/0",
+		egress: false,
+		ruleAction: "allow",
+	},
+	{
+		ruleNumber: 7,
+		icmp: {
+			code: -1,
+			type: ICMP_TYPES.all,
+		},
+		protocol: PROTOCOLS.tcp,
+		portRange: {
+			from: 443,
+			to: 443,
+		},
+		cidrBlock: "0.0.0.0/0",
+		egress: false,
+		ruleAction: "allow",
+	},
+	{
+		ruleNumber: 8,
+		icmp: {
+			code: -1,
+			type: ICMP_TYPES.all,
+		},
+		protocol: PROTOCOLS.tcp,
+		portRange: {
+			from: 943,
+			to: 943,
+		},
+		cidrBlock: "0.0.0.0/0",
+		egress: false,
+		ruleAction: "allow",
+	},
+	{
+		ruleNumber: 9,
+		icmp: {
+			code: -1,
+			type: ICMP_TYPES.all,
+		},
+		protocol: PROTOCOLS.udp,
+		portRange: {
+			from: 943,
+			to: 943,
+		},
+		cidrBlock: "0.0.0.0/0",
+		egress: true,
+		ruleAction: "allow",
+	},
+];
+
+const ALLOW_EVERYTHING: NaclRuleConfig[] = [
+	{
+		ruleNumber: 11,
+		icmp: {
+			code: -1,
+			type: ICMP_TYPES.all,
+		},
+		protocol: PROTOCOLS.all,
+		cidrBlock: "0.0.0.0/0",
+		egress: false,
+		ruleAction: "allow",
+	},
+	{
+		ruleNumber: 12,
+		icmp: {
+			code: -1,
+			type: ICMP_TYPES.all,
+		},
+		protocol: PROTOCOLS.all,
+		cidrBlock: "0.0.0.0/0",
+		egress: true,
+		ruleAction: "allow",
+	},
+];
+
 const DENY_EVERYTHING_RULES: NaclRuleConfig[] = [
 	{
 		ruleNumber: 999,
@@ -137,9 +225,11 @@ export const subnetNaclRules: SubnetNaclConfig[] = [
 	{
 		subnetName: "r-datacenter",
 		rules: [
+			...ALLOW_EVERYTHING,
 			...ALLOW_SSH_RULES,
+			...ALLOW_VPN,
 			...aclAllProcsAndIps("deny", ["10.66.0.80/28"]),
-			...aclAllProcsAndIps("allow", ["10.66.0.0/24"], 20),
+			...aclAllProcsAndIps("allow", ["10.66.0.0/24", "0.0.0.0/0"], 20),
 			...DENY_EVERYTHING_RULES,
 		],
 	},
@@ -161,25 +251,6 @@ export const subnetNaclRules: SubnetNaclConfig[] = [
 				"10.66.0.0/27",
 			]),
 			...DENY_EVERYTHING_RULES,
-		],
-	},
-	{
-		subnetName: "r-vpn",
-		rules: [
-			{
-				ruleNumber: 500,
-				protocol: -1,
-				cidrBlock: "0.0.0.0/0",
-				egress: false,
-				ruleAction: "allow",
-			},
-			{
-				ruleNumber: 500,
-				protocol: -1,
-				cidrBlock: "0.0.0.0/0",
-				egress: true,
-				ruleAction: "allow",
-			},
 		],
 	},
 ];
