@@ -1,3 +1,13 @@
+### Instalar OpenVPN
+```bash
+apt update
+apt upgrade
+apt install tzdata
+dpkg-reconfigure tzdata
+
+bash <(curl -fsS https://packages.openvpn.net/as/install.sh) --yes
+```
+
 ### Actualizar DNS (Arch Linux)
 ```bash
 sudo cp /etc/resolv.conf /etc/resolv.conf.backup
