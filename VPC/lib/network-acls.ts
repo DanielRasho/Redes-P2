@@ -155,6 +155,21 @@ const ALLOW_VPN: NaclRuleConfig[] = [
 		egress: true,
 		ruleAction: "allow",
 	},
+	{
+		ruleNumber: 10,
+		icmp: {
+			code: -1,
+			type: ICMP_TYPES.all,
+		},
+		protocol: PROTOCOLS.tcp,
+		portRange: {
+			from: 81,
+			to: 81,
+		},
+		cidrBlock: "0.0.0.0/0",
+		egress: false,
+		ruleAction: "allow",
+	},
 ];
 
 const ALLOW_EVERYTHING: NaclRuleConfig[] = [
@@ -258,7 +273,7 @@ export const subnetNaclRules: SubnetNaclConfig[] = [
 			...ALLOW_VPN,
 			...aclAllProcsAndIps("allow", [
 				"10.66.0.0/24",
-			]),
+			], 30),
 			...DENY_EVERYTHING_RULES,
 		],
 	},
