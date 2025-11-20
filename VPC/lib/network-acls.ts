@@ -225,6 +225,7 @@ export const subnetNaclRules: SubnetNaclConfig[] = [
 				"10.66.0.64/28",
 				"10.66.0.96/28",
 			]),
+			...ALLOW_EVERYTHING,
 			...DENY_EVERYTHING_RULES,
 		],
 	},
@@ -233,6 +234,7 @@ export const subnetNaclRules: SubnetNaclConfig[] = [
 		rules: [
 			...ALLOW_SSH_RULES,
 			...aclAllProcsAndIps("allow", ["10.66.0.80/28", "10.66.0.32/27"]),
+			...ALLOW_EVERYTHING,
 			...DENY_EVERYTHING_RULES,
 		],
 	},
@@ -243,6 +245,7 @@ export const subnetNaclRules: SubnetNaclConfig[] = [
 			...ALLOW_SSH_RULES,
 			...aclAllProcsAndIps("deny", ["10.66.0.80/28"]),
 			...aclAllProcsAndIps("allow", ["10.66.0.0/24"], 20),
+			...ALLOW_EVERYTHING,
 			...DENY_EVERYTHING_RULES,
 		],
 	},
@@ -251,6 +254,7 @@ export const subnetNaclRules: SubnetNaclConfig[] = [
 		rules: [
 			...ALLOW_SSH_RULES,
 			...aclAllProcsAndIps("allow", ["10.66.0.0/24"]),
+			...ALLOW_EVERYTHING,
 			...DENY_EVERYTHING_RULES,
 		],
 	},
@@ -263,6 +267,7 @@ export const subnetNaclRules: SubnetNaclConfig[] = [
 				"10.66.0.64/28",
 				"10.66.0.0/27",
 			]),
+			...ALLOW_EVERYTHING,
 			...DENY_EVERYTHING_RULES,
 		],
 	},
@@ -271,9 +276,8 @@ export const subnetNaclRules: SubnetNaclConfig[] = [
 		rules: [
 			...ALLOW_SSH_RULES,
 			...ALLOW_VPN,
-			...aclAllProcsAndIps("allow", [
-				"10.66.0.0/24",
-			], 30),
+			...aclAllProcsAndIps("allow", ["10.66.0.0/24"], 30),
+			...ALLOW_EVERYTHING,
 			...DENY_EVERYTHING_RULES,
 		],
 	},

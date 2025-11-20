@@ -115,6 +115,12 @@ export function deployMachines(
 			...(config.userData && {
 				userData: config.userData,
 			}),
+			...(config.cloudFormationInit && {
+				init: config.cloudFormationInit.init,
+			}),
+			...(config.cloudFormationInit && {
+				initOptions: config.cloudFormationInit.opt,
+			}),
 		});
 
 		if (config.tags) {
