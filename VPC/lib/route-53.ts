@@ -9,7 +9,7 @@ export function createRoute53Configuration(
 ): route53.PrivateHostedZone {
   // Create Private Hosted Zone in Route53
   const hostedZone = new route53.PrivateHostedZone(scope, 'PrivateHostedZone', {
-    zoneName: 'ruwu.com',
+    zoneName: 'ruwurowo.com',
     vpc: vpc,
     comment: 'Private hosted zone for ruwu.com',
   });
@@ -17,14 +17,14 @@ export function createRoute53Configuration(
   // Add A records
   new route53.ARecord(scope, 'RuwuComRecord', {
     zone: hostedZone,
-    recordName: 'ruwu.com',
+    recordName: 'ruwurowo.com',
     target: route53.RecordTarget.fromIpAddresses('10.66.0.74'),
     ttl: cdk.Duration.seconds(5),
   });
 
   new route53.ARecord(scope, 'LdapRuwuComRecord', {
     zone: hostedZone,
-    recordName: 'ldap.ruwu.com',
+    recordName: 'ldap.ruwurowo.com',
     target: route53.RecordTarget.fromIpAddresses('10.66.0.71'),
     ttl: cdk.Duration.seconds(5),
   });
